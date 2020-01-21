@@ -1,0 +1,47 @@
+--Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
+
+Note: Print NULL when there are no more names corresponding to an occupation
+
+select x.name
+       ,y.name
+       ,z.name 
+       ,z1.name
+from 
+(select ROWNUM as id
+        ,a.name
+ from 
+ (select name 
+  from occupations
+  where lower(occupation) = 'doctor'
+  order by name) a
+) x
+full outer join
+(select ROWNUM as id
+        ,a.name
+ from 
+ (select name 
+  from occupations
+  where lower(occupation) = 'professor'
+  order by name) a
+) y
+on (x.id=y.id)
+full outer join
+(select ROWNUM as id
+        ,a.name
+ from 
+ (select name 
+  from occupations
+  where lower(occupation) = 'singer'
+  order by name) a
+) z
+on (y.id= z.id) 
+full outer join 
+(select ROWNUM as id
+        ,a.name
+ from 
+ (select name 
+  from occupations
+  where lower(occupation) = 'actor'
+  order by name) a
+) z1
+on (z.id=z1.id);
